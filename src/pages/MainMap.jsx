@@ -57,8 +57,9 @@ const MainMap = () => {
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
     SetSearchAddress(value);
+    console.log(SetSearchAddress);
     try {
-      const response = await axios.post(`/search`, {
+      const response = await axios.post(`https://spart-instagram.shop/search`, {
         search: value,
       });
       console.log(response.data);
