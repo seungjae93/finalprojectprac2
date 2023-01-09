@@ -60,7 +60,7 @@ const MainMap = () => {
     console.log(SetSearchAddress);
     try {
       const response = await axios.get(
-        `https://spart-instagram.shop/search/:text`,
+        `https://spart-instagram.shop/search/${value}`,
         {
           search: value,
         }
