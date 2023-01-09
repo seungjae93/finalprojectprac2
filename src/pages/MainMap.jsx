@@ -59,9 +59,12 @@ const MainMap = () => {
     SetSearchAddress(value);
     console.log(SetSearchAddress);
     try {
-      const response = await axios.get(`https://spart-instagram.shop/search`, {
-        search: value,
-      });
+      const response = await axios.get(
+        `https://spart-instagram.shop/search/:text`,
+        {
+          search: value,
+        }
+      );
       console.log(response.data);
     } catch (error) {
       console.log(error);
