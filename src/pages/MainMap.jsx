@@ -3,7 +3,6 @@ import styled from "styled-components";
 import axios from "axios";
 import { throttle } from "lodash";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useNavigate } from "react-router-dom";
 import TotalModal from "../components/MapModal/TotalModal";
 import SubModal from "../components/MapModal/SubModal";
 
@@ -11,7 +10,6 @@ const { kakao } = window;
 
 // 주소 입력후 검색 클릭 시 원하는 주소로 이동
 const MainMap = () => {
-  const navigate = useNavigate();
   const [state, setState] = useState({
     // 지도의 초기 위치
     center: { lat: 33.450705, lng: 126.570677 },
@@ -19,7 +17,30 @@ const MainMap = () => {
     isPanto: true,
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [searchAddress, setSearchAddress] = useState("");
+  const [searchAddress, SetSearchAddress] = useState(""); //useState()
+  const [map, setMap] = useState(); //지도
+  const [pos, setPos] = useState(); //경도 위도
+  const [_level, _setLevel] = useState(); //지도 줌레벨
+
+  const handleMapInfo = () => {
+    {
+      map &&
+        setPos({
+          center: {
+            lat: map.getCenter().getLat(),
+            lng: map.getCenter().getLng(),
+          },
+          swLatLng: {
+            lat: map.getBounds().getSouthWest().getLat(),
+            lng: map.getBounds().getSouthWest().getLng(),
+          },
+          neLatLng: {
+            lat: map.getBounds().getNorthEast().getLat(),
+            lng: map.getBounds().getNorthEast().getLng(),
+          },
+        });
+    }
+  };
 
   const positions = [
     {
@@ -44,47 +65,38 @@ const MainMap = () => {
     setModalOpen(!modalOpen);
   };
 
-  const [searchData, setSearchData] = useState({});
-
-  const geocoder = new kakao.maps.services.Geocoder();
-
-  let callback = function (result, status) {
-    if (status === kakao.maps.services.Status.OK) {
-      const newSearch = result[0];
-      setState({
-        center: { lat: newSearch.y, lng: newSearch.x },
-      });
-    }
-  };
-
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
-    setSearchAddress(value);
+    SetSearchAddress(value);
     try {
-      const response = await axios.get(
-        `https://spart-instagram.shop/search/${value}`,
-        {
-          search: value,
-        }
-      );
-      console.log("response.data", response.data);
+      const response = await axios.post(`/search`, {
+        search: value,
+      });
+      console.log(response.data);
     } catch (error) {
-      console.log("get에러를 잡았어", error);
+      console.log(error);
     }
   }, 500);
 
   //검색시 리렌더링 줄이기
-  const onSearchHandler = useCallback(async () => {
-    geocoder.addressSearch(`${searchAddress}`, callback);
-    try {
-      await axios.post(`https://spart-instagram.shop/search`, {
-        text: `${searchAddress}`,
-      });
-    } catch (error) {
-      console.log("post에러를 잡았어", error);
-    }
-    setSearchAddress("");
+  const onSearchHandler = useCallback(() => {
+    const places = new kakao.maps.services.Places();
+    let placesSearch = function (data, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const newSearch = data[0];
+        setState({
+          center: { lat: newSearch.y, lng: newSearch.x },
+        });
+      }
+    };
+    places.keywordSearch(`${searchAddress}`, placesSearch);
+    SetSearchAddress("");
   }, [searchAddress]);
+
+  useEffect(() => {
+    handleMapInfo();
+    console.log(state);
+  }, [map, state]);
 
   return (
     <>
@@ -105,13 +117,6 @@ const MainMap = () => {
             </AutoSearchContainer>
           )}
           <button onClick={onSearchHandler}>검색</button>
-          <button
-            onClick={() => {
-              navigate("/review");
-            }}
-          >
-            리뷰로
-          </button>
         </SearchContainer>
         <StMapContainer>
           <Map // 지도를 표시할 Container
@@ -127,6 +132,39 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
+            onCenterChanged={(map) =>
+              setState({
+                center: {
+                  lat: map.getCenter().getLat(),
+                  lng: map.getCenter().getLng(),
+                },
+                swLatLng: {
+                  lat: map.getBounds().getSouthWest().getLat(),
+                  lng: map.getBounds().getSouthWest().getLng(),
+                },
+                neLatLng: {
+                  lat: map.getBounds().getNorthEast().getLat(),
+                  lng: map.getBounds().getNorthEast().getLng(),
+                },
+              })
+            }
+            onIdle={handleMapInfo}
+            // onDragEnd={(map) =>
+            //   setPos({
+            //     center: {
+            //       lat: map.getCenter().getLat(),
+            //       lng: map.getCenter().getLng(),
+            //     },
+            //     swLatLng: {
+            //       lat: map.getBounds().getSouthWest().getLat(),
+            //       lng: map.getBounds().getSouthWest().getLng(),
+            //     },
+            //     neLatLng: {
+            //       lat: map.getBounds().getNorthEast().getLat(),
+            //       lng: map.getBounds().getNorthEast().getLng(),
+            //     },
+            //   })
+            // }
           >
             {positions.map((position) => {
               return (
