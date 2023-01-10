@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { throttle } from "lodash";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { useNavigate } from "react-router-dom";
 import TotalModal from "../components/MapModal/TotalModal";
 import SubModal from "../components/MapModal/SubModal";
 
@@ -10,6 +11,7 @@ const { kakao } = window;
 
 // 주소 입력후 검색 클릭 시 원하는 주소로 이동
 const MainMap = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     // 지도의 초기 위치
     center: { lat: 33.450705, lng: 126.570677 },
@@ -17,7 +19,7 @@ const MainMap = () => {
     isPanto: true,
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [searchAddress, SetSearchAddress] = useState(""); //useState()
+  const [searchAddress, setSearchAddress] = useState("");
   const [map, setMap] = useState(); //지도
   const [pos, setPos] = useState(); //경도 위도
   const [_level, _setLevel] = useState(); //지도 줌레벨
@@ -65,16 +67,22 @@ const MainMap = () => {
     setModalOpen(!modalOpen);
   };
 
+  const [searchData, setSearchData] = useState({});
+
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
-    SetSearchAddress(value);
+    setSearchAddress(value);
     try {
-      const response = await axios.post(`/search`, {
-        search: value,
-      });
-      console.log(response.data);
+      const response = await axios.get(
+        `https://spart-instagram.shop/search/${value}`,
+        {
+          search: value,
+        }
+      );
+      const { data } = response.data;
+      searchData(data);
     } catch (error) {
-      console.log(error);
+      console.log("get에러를 잡았어", error);
     }
   }, 500);
 
@@ -90,7 +98,7 @@ const MainMap = () => {
       }
     };
     places.keywordSearch(`${searchAddress}`, placesSearch);
-    SetSearchAddress("");
+    setSearchAddress("");
   }, [searchAddress]);
 
   useEffect(() => {
@@ -117,6 +125,13 @@ const MainMap = () => {
             </AutoSearchContainer>
           )}
           <button onClick={onSearchHandler}>검색</button>
+          <button
+            onClick={() => {
+              navigate("/review");
+            }}
+          >
+            리뷰로
+          </button>
         </SearchContainer>
         <StMapContainer>
           <Map // 지도를 표시할 Container
