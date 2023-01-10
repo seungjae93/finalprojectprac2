@@ -64,8 +64,9 @@ const MainMap = () => {
           search: value,
         }
       );
-      console.log(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log("get에러를 잡았어", error);
+    }
   }, 500);
 
   //검색시 리렌더링 줄이기
@@ -75,14 +76,12 @@ const MainMap = () => {
       await axios.post(`https://spart-instagram.shop/search`, {
         text: `${searchAddress}`,
       });
-      console.log("보내지니?");
     } catch (error) {
-      console.log("에러를 잡았어", error);
+      console.log("post에러를 잡았어", error);
     }
-
     SetSearchAddress("");
   }, [searchAddress]);
-
+  console.log(response.data);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
