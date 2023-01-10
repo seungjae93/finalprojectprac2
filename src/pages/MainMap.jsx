@@ -44,7 +44,7 @@ const MainMap = () => {
     setModalOpen(!modalOpen);
   };
 
-  const [searchData, setSearchData] = useState([]);
+  const [searchData, setSearchData] = useState({});
 
   const geocoder = new kakao.maps.services.Geocoder();
 
