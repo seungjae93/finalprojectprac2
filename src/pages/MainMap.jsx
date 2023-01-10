@@ -65,16 +65,21 @@ const MainMap = () => {
         }
       );
       console.log(response.data);
-    } catch (error) {
-      console.log("에러를 잡았어", error);
-    }
+    } catch (error) {}
   }, 500);
 
   //검색시 리렌더링 줄이기
   const onSearchHandler = useCallback(async () => {
-    const res = geocoder.addressSearch(`${searchAddress}`, callback);
-    await axios.post(`https://spart-instagram.shop/search`, res);
-    console.log("보내지니?", res);
+    const text = geocoder.addressSearch(`${searchAddress}`, callback);
+    try {
+      await axios.post(`https://spart-instagram.shop/search`, {
+        text: text,
+      });
+      console.log("보내지니?", text);
+    } catch (error) {
+      console.log("에러를 잡았어", error);
+    }
+
     SetSearchAddress("");
   }, [searchAddress]);
 
