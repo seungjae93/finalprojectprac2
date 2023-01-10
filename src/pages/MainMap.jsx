@@ -19,7 +19,8 @@ const MainMap = () => {
     isPanto: true,
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [searchAddress, SetSearchAddress] = useState(""); //useState()
+  const [searchAddress, setSearchAddress] = useState("");
+
   const positions = [
     {
       title: "카카오",
@@ -43,6 +44,8 @@ const MainMap = () => {
     setModalOpen(!modalOpen);
   };
 
+  const [searchData, setSearchData] = useState({});
+
   const geocoder = new kakao.maps.services.Geocoder();
 
   let callback = function (result, status) {
@@ -56,21 +59,31 @@ const MainMap = () => {
 
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
-    SetSearchAddress(value);
+    setSearchAddress(value);
     try {
-      const response = await axios.post(`/search`, {
-        search: value,
-      });
-      console.log(response.data);
+      const response = await axios.get(
+        `https://spart-instagram.shop/search/${value}`,
+        {
+          search: value,
+        }
+      );
+      console.log("response.data", response.data);
     } catch (error) {
-      console.log(error);
+      console.log("get에러를 잡았어", error);
     }
   }, 500);
 
   //검색시 리렌더링 줄이기
-  const onSearchHandler = useCallback(() => {
+  const onSearchHandler = useCallback(async () => {
     geocoder.addressSearch(`${searchAddress}`, callback);
-    SetSearchAddress("");
+    try {
+      await axios.post(`https://spart-instagram.shop/search`, {
+        text: `${searchAddress}`,
+      });
+    } catch (error) {
+      console.log("post에러를 잡았어", error);
+    }
+    setSearchAddress("");
   }, [searchAddress]);
 
   return (

@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import Header from "../Header";
-
+import Header from "../components/Header";
 import MainMap from "../pages/MainMap";
 import Review from "../pages/Review";
 
