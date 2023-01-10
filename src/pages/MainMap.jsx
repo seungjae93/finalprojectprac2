@@ -20,7 +20,7 @@ const MainMap = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [searchAddress, setSearchAddress] = useState(""); //useState()
-  const [searchData, setSearchData] = useState([]);
+  const [searchData, setSearchData] = useState({});
   const positions = [
     {
       title: "카카오",
