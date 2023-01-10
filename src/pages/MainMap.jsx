@@ -20,7 +20,7 @@ const MainMap = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [searchAddress, setSearchAddress] = useState("");
-  const [searchData, setSearchData] = useState();
+  const [searchData, setSearchData] = useState({});
   const positions = [
     {
       title: "카카오",
@@ -65,8 +65,9 @@ const MainMap = () => {
           search: value,
         }
       );
-      console.log(response.data);
       setSearchData(response.data);
+      console.log(response.data);
+      console.log("setSearchDate________", setSearchData);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
@@ -85,7 +86,6 @@ const MainMap = () => {
     setSearchAddress("");
   }, [searchAddress]);
 
-  console.log(setSearchData);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
