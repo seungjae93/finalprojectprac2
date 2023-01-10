@@ -58,7 +58,7 @@ const MainMap = () => {
     const { value } = e.target;
     SetSearchAddress(value);
     try {
-      const { response } = await axios.get(
+      const response = await axios.get(
         `https://spart-instagram.shop/search/${value}`,
         {
           search: value,
