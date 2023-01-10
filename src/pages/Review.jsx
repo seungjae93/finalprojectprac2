@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "../redux/modules/reviewApi";
+import { useAddPost } from "../redux/modules/postsApi";
 
 import PostCode from "../redux/modules/PostCode";
 import useInputItem from "../hooks/useInputItem";
