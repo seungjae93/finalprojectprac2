@@ -67,8 +67,8 @@ const MainMap = () => {
           search: value,
         }
       );
-      setSearchData(response.data.data);
-      console.log(setSearchData);
+      console.log("response.data.data", response.data.data);
+      console.log("response.data[0]", response.data[0]);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
