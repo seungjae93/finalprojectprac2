@@ -16,9 +16,9 @@ export const useAddPost = () => {
 };
 
 //GET
-export const getPosts = async () => {
-  const response = await postsApi.get("/review");
-  return response.data;
-};
+// export const getPosts = async () => {
+//   const response = await postsApi.get("/review");
+//   return response.data;
+// };
 
 export default postsApi;
