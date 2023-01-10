@@ -20,7 +20,7 @@ const MainMap = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [searchAddress, setSearchAddress] = useState("");
-  const [searchData, setSearchData] = useState({});
+
   const positions = [
     {
       title: "카카오",
@@ -44,6 +44,8 @@ const MainMap = () => {
     setModalOpen(!modalOpen);
   };
 
+  const [searchData, setSearchData] = useState([]);
+
   const geocoder = new kakao.maps.services.Geocoder();
 
   let callback = function (result, status) {
@@ -65,9 +67,7 @@ const MainMap = () => {
           search: value,
         }
       );
-      setSearchData(response.data);
-      console.log(response.data);
-      console.log("setSearchDate________", setSearchData);
+      setSearchData(response.data.data);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
