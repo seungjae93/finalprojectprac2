@@ -68,6 +68,7 @@ const MainMap = () => {
         }
       );
       setSearchData(response.data.data);
+      console.log(setSearchData);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
