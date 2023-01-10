@@ -105,7 +105,7 @@ const MainMap = () => {
     handleMapInfo();
     console.log(state);
   }, [map, state]);
-
+  //
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
