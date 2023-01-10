@@ -2,7 +2,7 @@ import axios from "axios";
 import { useMutation } from "react-query";
 
 const postsApi = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "https://spart-instagram.shop",
 });
 
 //POST
@@ -16,9 +16,9 @@ export const useAddPost = () => {
 };
 
 //GET
-// export const getPosts = async () => {
-//   const response = await postsApi.get("/review");
-//   return response.data;
-// };
+export const getPosts = async () => {
+  const response = await postsApi.get("/review");
+  return response.data;
+};
 
 export default postsApi;
