@@ -19,8 +19,8 @@ const MainMap = () => {
     isPanto: true,
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [searchAddress, setSearchAddress] = useState(""); //useState()
-  const [searchData, setSearchData] = useState({});
+  const [searchAddress, setSearchAddress] = useState("");
+  const [searchData, setSearchData] = useState();
   const positions = [
     {
       title: "카카오",
@@ -85,7 +85,6 @@ const MainMap = () => {
     setSearchAddress("");
   }, [searchAddress]);
 
-  console.log(setSearchData);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
