@@ -84,7 +84,8 @@ const MainMap = () => {
     }
     setSearchAddress("");
   }, [searchAddress]);
-  setSearchData(response.data);
+
+  console.log(setSearchData);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
