@@ -70,9 +70,11 @@ const MainMap = () => {
 
   //검색시 리렌더링 줄이기
   const onSearchHandler = useCallback(async () => {
-    const text = geocoder.addressSearch(`${searchAddress}`, callback);
+    geocoder.addressSearch(`${searchAddress}`, callback);
     try {
-      await axios.post(`https://spart-instagram.shop/search`, text);
+      await axios.post(`https://spart-instagram.shop/search`, {
+        text: `${searchAddress}`,
+      });
       console.log("보내지니?", text);
     } catch (error) {
       console.log("에러를 잡았어", error);
