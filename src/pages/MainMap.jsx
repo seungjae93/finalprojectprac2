@@ -75,7 +75,7 @@ const MainMap = () => {
       await axios.post(`https://spart-instagram.shop/search`, {
         text: `${searchAddress}`,
       });
-      console.log("보내지니?", text);
+      console.log("보내지니?");
     } catch (error) {
       console.log("에러를 잡았어", error);
     }
