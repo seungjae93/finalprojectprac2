@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "./reviewApi";
-import PostCode from "./PostCode";
-// import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useAddPost } from "../redux/modules/reviewApi";
+import PostCode from "../redux/modules/PostCode";
 
 const Review = () => {
+  const [address, setAddress] = useState("");
   const [residence_type, setResidence_type] = useState("");
+  const [transaction_type, setTransaction_type] = useState("");
   const [deposit, setDeposit] = useState("");
   const [monthly_payment, setMonthly_payment] = useState("");
   const [acreage, setAcreage] = useState("");
+  const [communication, setCommunication] = useState("");
   const [bug, setBug] = useState("");
   const [smell, setSmell] = useState("");
   const [floor_noise, setFloor_noise] = useState("");
@@ -16,6 +18,7 @@ const Review = () => {
   const [town_noise, setTown_noise] = useState("");
   const [mold, setMold] = useState("");
   const [parking, setParking] = useState("");
+  const [safe, setSafe] = useState("");
   const [good, setGood] = useState("");
   const [bad, setBad] = useState("");
   const [star, setStar] = useState("");
@@ -28,10 +31,13 @@ const Review = () => {
     e.preventDefault();
     const formData = new FormData();
 
+    formData.append("address", address);
     formData.append("residence_type", residence_type);
+    formData.append("transaction_type", transaction_type);
     formData.append("deposit", deposit);
     formData.append("monthly_payment", monthly_payment);
     formData.append("acreage", acreage);
+    formData.append("communication", communication);
     formData.append("bug", bug);
     formData.append("smell", smell);
     formData.append("floor_noise", floor_noise);
@@ -39,6 +45,7 @@ const Review = () => {
     formData.append("town_noise", town_noise);
     formData.append("mold", mold);
     formData.append("parking", parking);
+    formData.append("safe", safe);
     formData.append("good", good);
     formData.append("bad", bad);
     formData.append("star", star);
@@ -60,16 +67,29 @@ const Review = () => {
     <>
       <h1>후기를 작성하는 페이지 입니다</h1>
       <StContainer>
-        <PostCode />
+        <PostCode setAddress={setAddress} />
+        <input
+          type="text"
+          name="address"
+          value={address}
+          onChange={() => {}}
+          placeholder="우편번호 찾기를 이용하세요"
+        />
 
         <select
           name="residence_type"
           onChange={(e) => setResidence_type(e.target.value)}
         >
-          <option value="투룸" checked>
-            투룸
-          </option>
+          <option value="원룸">원룸</option>
+          <option value="투룸">투룸</option>
+        </select>
+
+        <select
+          name="transaction_type"
+          onChange={(e) => setTransaction_type(e.target.value)}
+        >
           <option value="월세">월세</option>
+          <option value="전세">전세</option>
         </select>
 
         <input
@@ -88,41 +108,49 @@ const Review = () => {
           placeholder="월세 입력란입니다."
         />
 
+        <input
+          type="number"
+          name="acreage"
+          value={acreage}
+          onChange={(e) => setAcreage(e.target.value)}
+          placeholder="평수 입력란입니다."
+        />
+
         <div>
           <div>집 주인이 문제를 잘 해결해 주는지 평가</div>
           <input
             type="radio"
-            name="acreage"
+            name="communication"
             value="1"
-            onChange={(e) => setAcreage(e.target.value)}
+            onChange={(e) => setCommunication(e.target.value)}
           />
           1
           <input
             type="radio"
-            name="acreage"
+            name="communication"
             value="2"
-            onChange={(e) => setAcreage(e.target.value)}
+            onChange={(e) => setCommunication(e.target.value)}
           />
           2
           <input
             type="radio"
-            name="acreage"
+            name="communication"
             value="3"
-            onChange={(e) => setAcreage(e.target.value)}
+            onChange={(e) => setCommunication(e.target.value)}
           />
           3
           <input
             type="radio"
-            name="acreage"
+            name="communication"
             value="4"
-            onChange={(e) => setAcreage(e.target.value)}
+            onChange={(e) => setCommunication(e.target.value)}
           />
           4
           <input
             type="radio"
-            name="acreage"
+            name="communication"
             value="5"
-            onChange={(e) => setAcreage(e.target.value)}
+            onChange={(e) => setCommunication(e.target.value)}
           />
           5<div>벌래가 얼마나 자주 나오는지 평가</div>
           <input
@@ -368,6 +396,41 @@ const Review = () => {
             name="parking"
             value="5"
             onChange={(e) => setParking(e.target.value)}
+          />
+          5<div>보안은 좋은지 평가</div>
+          <input
+            type="radio"
+            name="safe"
+            value="1"
+            onChange={(e) => setSafe(e.target.value)}
+          />
+          1
+          <input
+            type="radio"
+            name="safe"
+            value="2"
+            onChange={(e) => setSafe(e.target.value)}
+          />
+          2
+          <input
+            type="radio"
+            name="safe"
+            value="3"
+            onChange={(e) => setSafe(e.target.value)}
+          />
+          3
+          <input
+            type="radio"
+            name="safe"
+            value="4"
+            onChange={(e) => setSafe(e.target.value)}
+          />
+          4
+          <input
+            type="radio"
+            name="safe"
+            value="5"
+            onChange={(e) => setSafe(e.target.value)}
           />
           5
         </div>
