@@ -19,7 +19,8 @@ const MainMap = () => {
     isPanto: true,
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [searchAddress, SetSearchAddress] = useState(""); //useState()
+  const [searchAddress, setSearchAddress] = useState(""); //useState()
+  const [searchData, setSearchData] = useState([]);
   const positions = [
     {
       title: "카카오",
@@ -56,7 +57,7 @@ const MainMap = () => {
 
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
-    SetSearchAddress(value);
+    setSearchAddress(value);
     try {
       const response = await axios.get(
         `https://spart-instagram.shop/search/${value}`,
@@ -65,6 +66,7 @@ const MainMap = () => {
         }
       );
       console.log(response.data);
+      setSearchData(response.data);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
@@ -80,9 +82,10 @@ const MainMap = () => {
     } catch (error) {
       console.log("post에러를 잡았어", error);
     }
-    SetSearchAddress("");
+    setSearchAddress("");
   }, [searchAddress]);
 
+  console.log(setSearchData);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
