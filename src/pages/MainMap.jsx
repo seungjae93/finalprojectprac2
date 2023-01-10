@@ -57,7 +57,6 @@ const MainMap = () => {
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
     SetSearchAddress(value);
-    console.log(SetSearchAddress);
     try {
       const response = await axios.get(
         `https://spart-instagram.shop/search/${value}`,
@@ -67,7 +66,7 @@ const MainMap = () => {
       );
       console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.log("에러를 잡았어", error);
     }
   }, 500);
 
@@ -91,6 +90,7 @@ const MainMap = () => {
           {searchAddress && (
             <AutoSearchContainer>
               <AutoSearchWrap>
+                //맵돌릴 위치
                 <AutoSearchData></AutoSearchData>
               </AutoSearchWrap>
             </AutoSearchContainer>
