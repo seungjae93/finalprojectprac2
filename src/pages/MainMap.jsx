@@ -72,9 +72,7 @@ const MainMap = () => {
   const onSearchHandler = useCallback(async () => {
     const text = geocoder.addressSearch(`${searchAddress}`, callback);
     try {
-      await axios.post(`https://spart-instagram.shop/search`, {
-        text: text,
-      });
+      await axios.post(`https://spart-instagram.shop/search`, text);
       console.log("보내지니?", text);
     } catch (error) {
       console.log("에러를 잡았어", error);
