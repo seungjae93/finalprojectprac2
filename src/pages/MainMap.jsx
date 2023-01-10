@@ -58,12 +58,13 @@ const MainMap = () => {
     const { value } = e.target;
     SetSearchAddress(value);
     try {
-      const response = await axios.get(
+      const { response } = await axios.get(
         `https://spart-instagram.shop/search/${value}`,
         {
           search: value,
         }
       );
+      console.log(response);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
@@ -81,7 +82,7 @@ const MainMap = () => {
     }
     SetSearchAddress("");
   }, [searchAddress]);
-  console.log(response.data);
+
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
@@ -96,7 +97,6 @@ const MainMap = () => {
           {searchAddress && (
             <AutoSearchContainer>
               <AutoSearchWrap>
-                //맵돌릴 위치
                 <AutoSearchData></AutoSearchData>
               </AutoSearchWrap>
             </AutoSearchContainer>
