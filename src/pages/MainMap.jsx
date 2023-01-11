@@ -80,7 +80,7 @@ const MainMap = () => {
         }
       );
       console.log("response.data", response.data);
-      const { data } = response.data;
+      const { data } = response;
       searchData(data);
       console.log("searchData!!!!!!!!", searchData);
     } catch (error) {
