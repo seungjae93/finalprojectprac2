@@ -186,6 +186,7 @@ const MainMap = () => {
             }}
             level={3} // 지도의 확대 레벨
             onZoomChanged={(map) => setLevel(map.getLevel())}
+            onCreate={(map) => setMap(map)}
             onDragEnd={(map) => {
               setPos({
                 center: {
