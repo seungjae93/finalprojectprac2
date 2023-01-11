@@ -119,8 +119,8 @@ const MainMap = () => {
   const onPosHandler = async () => {
     try {
       await axios.post(`https://spart-instagram.shop/map`, {
-        swLatLng,
         neLatLng,
+        swLatLng,
       });
       console.log("들어갔니???????");
     } catch (error) {
