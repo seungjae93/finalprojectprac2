@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useMutation } from "react-query";
 
-const postsApi = axios.create({
+export const postsApi = axios.create({
   baseURL: "https://spart-instagram.shop",
 });
 
