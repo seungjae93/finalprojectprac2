@@ -119,8 +119,14 @@ const MainMap = () => {
   const onPosHandler = async () => {
     try {
       console.log({
-        swLatLng,
-        neLatLng,
+        swLatLng: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        neLatLng: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
       });
       await axios.post(`https://spart-instagram.shop/map`, {
         swLatLng: {
