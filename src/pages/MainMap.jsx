@@ -79,6 +79,7 @@ const MainMap = () => {
           search: value,
         }
       );
+      console.log("response.data", response.data);
       const { data } = response.data;
       searchData(data);
       console.log("searchData!!!!!!!!", searchData);
@@ -124,13 +125,12 @@ const MainMap = () => {
         text: `${searchAddress}`,
       });
       console.log("보내지니???");
-      console.log("setSearchData", setSearchData);
+      console.log("SearchData", searchData);
     } catch (error) {
       console.log("post에러를 잡았어", error);
     }
     setSearchAddress("");
   }, [searchAddress]);
-  console.log(setSearchData);
 
   useEffect(() => {
     handleMapInfo();
