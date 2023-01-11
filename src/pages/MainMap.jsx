@@ -131,7 +131,7 @@ const MainMap = () => {
 
   useEffect(() => {
     handleMapInfo();
-    // console.log(state);
+    console.log(state);
   }, [map, state]);
 
   return (
