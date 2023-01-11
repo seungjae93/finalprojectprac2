@@ -25,25 +25,25 @@ const MainMap = () => {
   const [pos, setPos] = useState(); //경도 위도
   const [_level, _setLevel] = useState(); //지도 줌레벨
 
-  const handleMapInfo = () => {
-    {
-      map &&
-        setPos({
-          center: {
-            lat: map.getCenter().getLat(),
-            lng: map.getCenter().getLng(),
-          },
-          swLatLng: {
-            lat: map.getBounds().getSouthWest().getLat(),
-            lng: map.getBounds().getSouthWest().getLng(),
-          },
-          neLatLng: {
-            lat: map.getBounds().getNorthEast().getLat(),
-            lng: map.getBounds().getNorthEast().getLng(),
-          },
-        });
-    }
-  };
+  // const handleMapInfo = () => {
+  //   {
+  //     map &&
+  //       setPos({
+  //         center: {
+  //           lat: map.getCenter().getLat(),
+  //           lng: map.getCenter().getLng(),
+  //         },
+  //         swLatLng: {
+  //           lat: map.getBounds().getSouthWest().getLat(),
+  //           lng: map.getBounds().getSouthWest().getLng(),
+  //         },
+  //         neLatLng: {
+  //           lat: map.getBounds().getNorthEast().getLat(),
+  //           lng: map.getBounds().getNorthEast().getLng(),
+  //         },
+  //       });
+  //   }
+  // };
 
   const positions = [
     {
@@ -114,10 +114,11 @@ const MainMap = () => {
     setSearchAddress("");
   }, [searchAddress]);
 
-  useEffect(() => {
-    handleMapInfo();
-    console.log(pos);
-  }, [map, state, pos]);
+  // useEffect(() => {
+  //   handleMapInfo();
+  //   console.log(pos);
+  // }, [map, state, pos]);
+  console.log(pos);
 
   return (
     <>
@@ -160,23 +161,23 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
-            // onDragEnd={(map) =>
-            //   setPos({
-            //     center: {
-            //       lat: map.getCenter().getLat(),
-            //       lng: map.getCenter().getLng(),
-            //     },
-            //     swLatLng: {
-            //       lat: map.getBounds().getSouthWest().getLat(),
-            //       lng: map.getBounds().getSouthWest().getLng(),
-            //     },
-            //     neLatLng: {
-            //       lat: map.getBounds().getNorthEast().getLat(),
-            //       lng: map.getBounds().getNorthEast().getLng(),
-            //     },
-            //   })
-            // }
-            onIdle={handleMapInfo}
+            onDragEnd={(map) =>
+              setPos({
+                center: {
+                  lat: map.getCenter().getLat(),
+                  lng: map.getCenter().getLng(),
+                },
+                swLatLng: {
+                  lat: map.getBounds().getSouthWest().getLat(),
+                  lng: map.getBounds().getSouthWest().getLng(),
+                },
+                neLatLng: {
+                  lat: map.getBounds().getNorthEast().getLat(),
+                  lng: map.getBounds().getNorthEast().getLng(),
+                },
+              })
+            }
+            // onIdle={handleMapInfo}
           >
             {positions.map((position) => {
               return (
