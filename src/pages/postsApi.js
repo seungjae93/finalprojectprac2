@@ -20,5 +20,3 @@ export const useAddPost = () => {
 //   const response = await postsApi.get("/review");
 //   return response.data;
 // };
-
-export default postsApi;
