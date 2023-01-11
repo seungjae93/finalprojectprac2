@@ -20,6 +20,8 @@ const DropBox = () => {
     "제주도",
   ];
 
+  const options2 = ["강남구", "강동구", "강북구"];
+
   const onOptionClicked = (value) => {
     setSelectedOption(value);
     setOpen(false);

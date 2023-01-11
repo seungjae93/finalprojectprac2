@@ -1,136 +1,136 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
-import { throttle } from "lodash";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useNavigate } from "react-router-dom";
-import TotalModal from "../components/MapModal/TotalModal";
-import SubModal from "../components/MapModal/SubModal";
+// import axios from "axios";
+// import { throttle } from "lodash";
+// import { Map, MapMarker } from "react-kakao-maps-sdk";
+// import { useNavigate } from "react-router-dom";
+// import TotalModal from "../components/MapModal/TotalModal";
+// import SubModal from "../components/MapModal/SubModal";
 
-const { kakao } = window;
+// const { kakao } = window;
 
 // 주소 입력후 검색 클릭 시 원하는 주소로 이동
 const MainMap = () => {
-  const navigate = useNavigate();
-  const [state, setState] = useState({
-    // 지도의 초기 위치
-    center: { lat: 33.450705, lng: 126.570677 },
-    // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
-    isPanto: true,
-  });
-  const [modalOpen, setModalOpen] = useState(false);
-  const [searchAddress, setSearchAddress] = useState("");
-  const [searchData, setSearchData] = useState([]);
-  const [map, setMap] = useState(); //지도
-  const [pos, setPos] = useState(); //경도 위도
-  const [_level, _setLevel] = useState(); //지도 줌레벨
+  // const navigate = useNavigate();
+  // const [state, setState] = useState({
+  //   // 지도의 초기 위치
+  //   center: { lat: 33.450705, lng: 126.570677 },
+  //   // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
+  //   isPanto: true,
+  // });
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [searchAddress, setSearchAddress] = useState("");
+  // const [searchData, setSearchData] = useState([]);
+  // const [map, setMap] = useState(); //지도
+  // const [pos, setPos] = useState(); //경도 위도
+  // const [_level, _setLevel] = useState(); //지도 줌레벨
 
-  // const handleMapInfo = () => {
+  // // const handleMapInfo = () => {
+  // //   {
+  // //     map &&
+  // //       setPos({
+  // //         center: {
+  // //           lat: map.getCenter().getLat(),
+  // //           lng: map.getCenter().getLng(),
+  // //         },
+  // //         swLatLng: {
+  // //           lat: map.getBounds().getSouthWest().getLat(),
+  // //           lng: map.getBounds().getSouthWest().getLng(),
+  // //         },
+  // //         neLatLng: {
+  // //           lat: map.getBounds().getNorthEast().getLat(),
+  // //           lng: map.getBounds().getNorthEast().getLng(),
+  // //         },
+  // //       });
+  // //   }
+  // // };
+
+  // const positions = [
   //   {
-  //     map &&
-  //       setPos({
-  //         center: {
-  //           lat: map.getCenter().getLat(),
-  //           lng: map.getCenter().getLng(),
-  //         },
-  //         swLatLng: {
-  //           lat: map.getBounds().getSouthWest().getLat(),
-  //           lng: map.getBounds().getSouthWest().getLng(),
-  //         },
-  //         neLatLng: {
-  //           lat: map.getBounds().getNorthEast().getLat(),
-  //           lng: map.getBounds().getNorthEast().getLng(),
-  //         },
-  //       });
+  //     title: "카카오",
+  //     latlng: { lat: 33.450705, lng: 126.570677 },
+  //   },
+  //   {
+  //     title: "생태연못",
+  //     latlng: { lat: 33.450936, lng: 126.569477 },
+  //   },
+  //   {
+  //     title: "텃밭",
+  //     latlng: { lat: 33.450879, lng: 126.56994 },
+  //   },
+  //   {
+  //     title: "근린공원",
+  //     latlng: { lat: 33.451393, lng: 126.570738 },
+  //   },
+  // ];
+
+  // const modalHandler = () => {
+  //   setModalOpen(!modalOpen);
+  // };
+
+  // const onAddressHandler = throttle(async (e) => {
+  //   const { value } = e.target;
+  //   setSearchAddress(value);
+  //   try {
+  //     const response = await axios.get(
+  //       `https://spart-instagram.shop/search/${value}`,
+  //       {
+  //         search: value,
+  //       }
+  //     );
+  //     console.log("response.data", response.data);
+  //     const { data } = response.data;
+  //     searchData(data);
+  //     console.log("searchData!!!!!!!!", searchData);
+  //   } catch (error) {}
+  // }, 500);
+
+  // //장소 검색 객체 생성
+  // const ps = new kakao.maps.services.Places();
+
+  // //장소검색이 완료됐을 때 호출되는 콜백함수
+  // const placesSearchCB = function (data, status) {
+  //   if (status === kakao.maps.services.Status.OK) {
+  //     const newSearch = data[0];
+  //     setState({
+  //       center: { lat: newSearch.y, lng: newSearch.x },
+  //     });
   //   }
   // };
 
-  const positions = [
-    {
-      title: "카카오",
-      latlng: { lat: 33.450705, lng: 126.570677 },
-    },
-    {
-      title: "생태연못",
-      latlng: { lat: 33.450936, lng: 126.569477 },
-    },
-    {
-      title: "텃밭",
-      latlng: { lat: 33.450879, lng: 126.56994 },
-    },
-    {
-      title: "근린공원",
-      latlng: { lat: 33.451393, lng: 126.570738 },
-    },
-  ];
+  // //검색시 리렌더링 줄이기
+  // const onSearchHandler = useCallback(async () => {
+  //   //키워드로 장소를 검색
+  //   ps.keywordSearch(`${searchAddress}`, placesSearchCB);
+  //   try {
+  //     await axios.post(`https://spart-instagram.shop/search`, {
+  //       text: `${searchAddress}`,
+  //     });
+  //   } catch (error) {}
+  //   setSearchAddress("");
+  // }, [searchAddress]);
 
-  const modalHandler = () => {
-    setModalOpen(!modalOpen);
-  };
+  // // useEffect(() => {
+  // //   handleMapInfo();
+  // //   console.log(pos);
+  // // }, [map, state, pos]);
+  // console.log(pos);
 
-  const onAddressHandler = throttle(async (e) => {
-    const { value } = e.target;
-    setSearchAddress(value);
-    try {
-      const response = await axios.get(
-        `https://spart-instagram.shop/search/${value}`,
-        {
-          search: value,
-        }
-      );
-      console.log("response.data", response.data);
-      const { data } = response.data;
-      searchData(data);
-      console.log("searchData!!!!!!!!", searchData);
-    } catch (error) {}
-  }, 500);
-
-  //장소 검색 객체 생성
-  const ps = new kakao.maps.services.Places();
-
-  //장소검색이 완료됐을 때 호출되는 콜백함수
-  const placesSearchCB = function (data, status) {
-    if (status === kakao.maps.services.Status.OK) {
-      const newSearch = data[0];
-      setState({
-        center: { lat: newSearch.y, lng: newSearch.x },
-      });
-    }
-  };
-
-  //검색시 리렌더링 줄이기
-  const onSearchHandler = useCallback(async () => {
-    //키워드로 장소를 검색
-    ps.keywordSearch(`${searchAddress}`, placesSearchCB);
-    try {
-      await axios.post(`https://spart-instagram.shop/search`, {
-        text: `${searchAddress}`,
-      });
-    } catch (error) {}
-    setSearchAddress("");
-  }, [searchAddress]);
-
-  // useEffect(() => {
-  //   handleMapInfo();
-  //   console.log(pos);
-  // }, [map, state, pos]);
-  console.log(pos);
-
-  const onPosHandler = async () => {
-    try {
-      await axios.post(`https://spart-instagram.shop/map`, {
-        swLatLng,
-        neLatLng,
-      });
-      console.log("들어갔니???????");
-    } catch (error) {
-      console.log("post에러를 잡았어", error);
-    }
-  };
+  // const onPosHandler = async () => {
+  //   try {
+  //     await axios.post(`https://spart-instagram.shop/map`, {
+  //       swLatLng,
+  //       neLatLng,
+  //     });
+  //     console.log("들어갔니???????");
+  //   } catch (error) {
+  //     console.log("post에러를 잡았어", error);
+  //   }
+  // };
 
   return (
     <>
-      {modalOpen && <TotalModal modalHandler={modalHandler} />}
+      {/* {modalOpen && <TotalModal modalHandler={modalHandler} />}
       {modalOpen && <SubModal modalHandler={modalHandler} />}
       <StContainer>
         <SearchContainer>
@@ -206,7 +206,7 @@ const MainMap = () => {
             })}
           </Map>
         </StMapContainer>
-      </StContainer>
+      </StContainer> */}
     </>
   );
 };
