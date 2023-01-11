@@ -87,19 +87,47 @@ const MainMap = () => {
   }, 500);
 
   //검색시 리렌더링 줄이기
-  const onSearchHandler = useCallback(() => {
-    const places = new kakao.maps.services.Places();
-    let placesSearch = function (data, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        const newSearch = data[0];
-        setState({
-          center: { lat: newSearch.y, lng: newSearch.x },
-        });
-      }
-    };
-    places.keywordSearch(`${searchAddress}`, placesSearch);
+  // const onSearchHandler = useCallback(async () => {
+  //   geocoder.addressSearch(`${searchAddress}`, callback);
+  //   try {
+  //     await axios.post(`https://spart-instagram.shop/search`, {
+  //       text: `${searchAddress}`,
+  //     });
+  //   } catch (error) {
+  //     console.log("post에러를 잡았어", error);
+  //   }
+  //   setSearchAddress("");
+  // }, [searchAddress]);
+
+  // console.log(setSearchData);
+
+  //장소 검색 객체 생성
+  const ps = new kakao.maps.services.Places();
+
+  //장소검색이 완료됐을 때 호출되는 콜백함수
+  const placesSearchCB = function (data, status) {
+    if (status === kakao.maps.services.Status.OK) {
+      const newSearch = data[0];
+      setState({
+        center: { lat: newSearch.y, lng: newSearch.x },
+      });
+    }
+  };
+
+  //검색시 리렌더링 줄이기
+  const onSearchHandler = useCallback(async () => {
+    //키워드로 장소를 검색
+    ps.keywordSearch(`${searchAddress}`, placesSearchCB);
+    try {
+      await axios.post(`https://spart-instagram.shop/search`, {
+        text: `${searchAddress}`,
+      });
+    } catch (error) {
+      console.log("post에러를 잡았어", error);
+    }
     setSearchAddress("");
   }, [searchAddress]);
+  console.log(setSearchData);
 
   useEffect(() => {
     handleMapInfo();
@@ -164,22 +192,6 @@ const MainMap = () => {
               })
             }
             onIdle={handleMapInfo}
-            // onDragEnd={(map) =>
-            //   setPos({
-            //     center: {
-            //       lat: map.getCenter().getLat(),
-            //       lng: map.getCenter().getLng(),
-            //     },
-            //     swLatLng: {
-            //       lat: map.getBounds().getSouthWest().getLat(),
-            //       lng: map.getBounds().getSouthWest().getLng(),
-            //     },
-            //     neLatLng: {
-            //       lat: map.getBounds().getNorthEast().getLat(),
-            //       lng: map.getBounds().getNorthEast().getLng(),
-            //     },
-            //   })
-            // }
           >
             {positions.map((position) => {
               return (
