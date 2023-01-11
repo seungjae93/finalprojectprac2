@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "./reviewApi";
+
+import { useAddPost } from "./postsApi";
+
 import PostCode from "../pages/PostCode";
 import useInputItem from "../hooks/useInputItem";
 
