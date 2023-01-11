@@ -19,7 +19,7 @@ const Review = () => {
     formData.append("address", address);
 
     for (const property in input) {
-      formData.append(input[property], `${property}`);
+      formData.append(`${property}`, input[property]);
     }
 
     for (let i = 0; i < image.length; i++) {
