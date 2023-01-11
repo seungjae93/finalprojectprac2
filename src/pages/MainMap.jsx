@@ -85,21 +85,6 @@ const MainMap = () => {
     } catch (error) {}
   }, 500);
 
-  //검색시 리렌더링 줄이기
-  // const onSearchHandler = useCallback(async () => {
-  //   geocoder.addressSearch(`${searchAddress}`, callback);
-  //   try {
-  //     await axios.post(`https://spart-instagram.shop/search`, {
-  //       text: `${searchAddress}`,
-  //     });
-  //   } catch (error) {
-  //     console.log("post에러를 잡았어", error);
-  //   }
-  //   setSearchAddress("");
-  // }, [searchAddress]);
-
-  // console.log(setSearchData);
-
   //장소 검색 객체 생성
   const ps = new kakao.maps.services.Places();
 
@@ -131,8 +116,8 @@ const MainMap = () => {
 
   useEffect(() => {
     handleMapInfo();
-    console.log(state);
-  }, [map, state]);
+    console.log(pos);
+  }, [map, state, pos]);
 
   return (
     <>
@@ -176,7 +161,7 @@ const MainMap = () => {
             }}
             level={3} // 지도의 확대 레벨
             onDragEnd={(map) =>
-              setState({
+              setPos({
                 center: {
                   lat: map.getCenter().getLat(),
                   lng: map.getCenter().getLng(),
