@@ -24,7 +24,7 @@ const MainMap = () => {
   const [map, setMap] = useState(); //지도
   const [pos, setPos] = useState(); //경도 위도
   const [level, setLevel] = useState(); //지도 줌레벨
-  console.log(map);
+  console.log(map.getBounds);
   // const handleMapInfo = () => {
   //   {
   //     map &&
@@ -118,25 +118,8 @@ const MainMap = () => {
 
   const onPosHandler = async () => {
     try {
-      console.log({
-        swLatLng: {
-          lat: map.getBounds().getSouthWest().getLat(),
-          lng: map.getBounds().getSouthWest().getLng(),
-        },
-        neLatLng: {
-          lat: map.getBounds().getNorthEast().getLat(),
-          lng: map.getBounds().getNorthEast().getLng(),
-        },
-      });
       await axios.post(`https://spart-instagram.shop/map`, {
-        swLatLng: {
-          lat: map.getBounds().getSouthWest().getLat(),
-          lng: map.getBounds().getSouthWest().getLng(),
-        },
-        neLatLng: {
-          lat: map.getBounds().getNorthEast().getLat(),
-          lng: map.getBounds().getNorthEast().getLng(),
-        },
+        ...pos,
       });
       console.log("들어갔니???????");
     } catch (error) {
@@ -189,10 +172,6 @@ const MainMap = () => {
             onCreate={(map) => setMap(map)}
             onDragEnd={(map) => {
               setPos({
-                center: {
-                  lat: map.getCenter().getLat(),
-                  lng: map.getCenter().getLng(),
-                },
                 swLatLng: {
                   lat: map.getBounds().getSouthWest().getLat(),
                   lng: map.getBounds().getSouthWest().getLng(),
