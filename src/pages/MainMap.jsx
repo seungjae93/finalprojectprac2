@@ -175,24 +175,23 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
-            onDragEnd={
-              ((map) =>
-                setPos({
-                  center: {
-                    lat: map.getCenter().getLat(),
-                    lng: map.getCenter().getLng(),
-                  },
-                  swLatLng: {
-                    lat: map.getBounds().getSouthWest().getLat(),
-                    lng: map.getBounds().getSouthWest().getLng(),
-                  },
-                  neLatLng: {
-                    lat: map.getBounds().getNorthEast().getLat(),
-                    lng: map.getBounds().getNorthEast().getLng(),
-                  },
-                }),
-              onPosHandler)
-            }
+            onDragEnd={(map) => {
+              setPos({
+                center: {
+                  lat: map.getCenter().getLat(),
+                  lng: map.getCenter().getLng(),
+                },
+                swLatLng: {
+                  lat: map.getBounds().getSouthWest().getLat(),
+                  lng: map.getBounds().getSouthWest().getLng(),
+                },
+                neLatLng: {
+                  lat: map.getBounds().getNorthEast().getLat(),
+                  lng: map.getBounds().getNorthEast().getLng(),
+                },
+              });
+              onPosHandler();
+            }}
           >
             {positions.map((position) => {
               return (
