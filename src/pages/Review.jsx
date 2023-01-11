@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "../pages/postsApi";
+
+import { useAddPost } from "./postsApi";
 
 import PostCode from "../pages/PostCode";
 import useInputItem from "../hooks/useInputItem";
@@ -46,6 +47,7 @@ const Review = () => {
           value={address}
           onChange={() => {}}
           placeholder="우편번호 찾기를 이용하세요"
+          size="45"
         />
         <select name="residence_type" onChange={onChangeHandler}>
           <option value="">선택해 주세요</option>
@@ -395,19 +397,21 @@ const Review = () => {
           />
           5
         </div>
-        <input
-          type="text"
+        <textarea
           name="good"
           value={input.good}
           onChange={onChangeHandler}
           placeholder="장점을 적는 공간입니다"
+          cols="25"
+          rows="5"
         />
-        <input
-          type="text"
+        <textarea
           name="bad"
           value={input.bad}
           onChange={onChangeHandler}
           placeholder="단점을 적는 공간입니다"
+          cols="25"
+          rows="5"
         />
         <div>--사진업로드--</div>
         <input
