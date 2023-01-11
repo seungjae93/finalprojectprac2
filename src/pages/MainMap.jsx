@@ -80,8 +80,8 @@ const MainMap = () => {
       );
       console.log("response.data", response.data);
       const { data } = response.data;
-      setSearchData(data);
-      console.log("searchData!!!!!!!!", setSearchData);
+      searchData(data);
+      console.log("searchData!!!!!!!!", searchData);
     } catch (error) {}
   }, 500);
 
@@ -131,7 +131,7 @@ const MainMap = () => {
 
   useEffect(() => {
     handleMapInfo();
-    console.log(state);
+    // console.log(state);
   }, [map, state]);
 
   return (
