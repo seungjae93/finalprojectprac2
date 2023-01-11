@@ -81,6 +81,7 @@ const MainMap = () => {
       );
       const { data } = response.data;
       searchData(data);
+      console.log("searchData!!!!!!!!", searchData);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
@@ -122,6 +123,8 @@ const MainMap = () => {
       await axios.post(`https://spart-instagram.shop/search`, {
         text: `${searchAddress}`,
       });
+      console.log("보내지니???");
+      console.log("setSearchData", setSearchData);
     } catch (error) {
       console.log("post에러를 잡았어", error);
     }
