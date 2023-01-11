@@ -105,7 +105,7 @@ const MainMap = () => {
     handleMapInfo();
     console.log(state);
   }, [map, state]);
-  //
+
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
@@ -147,7 +147,7 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
-            onCenterChanged={(map) =>
+            onDragEnd={(map) =>
               setState({
                 center: {
                   lat: map.getCenter().getLat(),
