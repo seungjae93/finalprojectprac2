@@ -31,7 +31,7 @@ const Review = () => {
       console.log(value);
     }
 
-    const review = { formData };
+    const review = formData;
     addPost(review);
   };
 
