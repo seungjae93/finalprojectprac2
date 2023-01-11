@@ -1,40 +1,30 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "../pages/postsApi";
-
+import { useAddPost } from "./postsApi";
 import PostCode from "../pages/PostCode";
 import useInputItem from "../hooks/useInputItem";
-
 const Review = () => {
   const { input, onChangeHandler } = useInputItem();
   const [address, setAddress] = useState("");
   const [image, setImage] = useState([]);
-
   const { mutate: addPost } = useAddPost();
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
-
     formData.append("address", address);
-
     for (const property in input) {
       formData.append(`${property}`, input[property]);
     }
-
     for (let i = 0; i < image.length; i++) {
       formData.append("images", image[i]);
     }
-
     //formData console 출력
     for (let value of formData.values()) {
       console.log(value);
     }
-
     const review = formData;
     addPost(review);
   };
-
   return (
     <>
       <h1>후기를 작성하는 페이지 입니다</h1>
@@ -46,6 +36,7 @@ const Review = () => {
           value={address}
           onChange={() => {}}
           placeholder="우편번호 찾기를 이용하세요"
+          size="45"
         />
         <select name="residence_type" onChange={onChangeHandler}>
           <option value="">선택해 주세요</option>
@@ -395,19 +386,21 @@ const Review = () => {
           />
           5
         </div>
-        <input
-          type="text"
+        <textarea
           name="good"
           value={input.good}
           onChange={onChangeHandler}
           placeholder="장점을 적는 공간입니다"
+          cols="25"
+          rows="5"
         />
-        <input
-          type="text"
+        <textarea
           name="bad"
           value={input.bad}
           onChange={onChangeHandler}
           placeholder="단점을 적는 공간입니다"
+          cols="25"
+          rows="5"
         />
         <div>--사진업로드--</div>
         <input
@@ -430,9 +423,7 @@ const Review = () => {
     </>
   );
 };
-
 export default Review;
-
 const StContainer = styled.form`
   display: flex;
   flex-direction: column;
