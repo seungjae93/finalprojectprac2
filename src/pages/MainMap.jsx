@@ -24,7 +24,7 @@ const MainMap = () => {
   const [map, setMap] = useState(); //지도
   const [pos, setPos] = useState(); //경도 위도
   const [level, setLevel] = useState(); //지도 줌레벨
-
+  console.log(map);
   // const handleMapInfo = () => {
   //   {
   //     map &&
