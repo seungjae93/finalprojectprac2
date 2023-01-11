@@ -130,7 +130,7 @@ const MainMap = () => {
               navigate("/review");
             }}
           >
-            리뷰로
+            리뷰
           </button>
         </SearchContainer>
         <StMapContainer>
