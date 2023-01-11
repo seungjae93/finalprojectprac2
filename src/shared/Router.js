@@ -9,7 +9,7 @@ const Router = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<MainMap />} />
+        <Route path="/map" element={<MainMap />} />
         <Route path="/review" element={<Review />} />
       </Routes>
     </BrowserRouter>
