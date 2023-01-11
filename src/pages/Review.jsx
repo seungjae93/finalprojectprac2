@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "../redux/modules/postsApi";
+import { useAddPost } from "../pages/postsApi";
 
-import PostCode from "../redux/modules/PostCode";
+import PostCode from "../pages/PostCode";
 import useInputItem from "../hooks/useInputItem";
 
 const Review = () => {
