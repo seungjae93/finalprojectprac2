@@ -20,6 +20,7 @@ const MainMap = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [searchAddress, setSearchAddress] = useState("");
+  const [searchData, setSearchData] = useState([]);
   const [map, setMap] = useState(); //지도
   const [pos, setPos] = useState(); //경도 위도
   const [_level, _setLevel] = useState(); //지도 줌레벨
@@ -67,8 +68,6 @@ const MainMap = () => {
     setModalOpen(!modalOpen);
   };
 
-  const [searchData, setSearchData] = useState({});
-
   const onAddressHandler = throttle(async (e) => {
     const { value } = e.target;
     setSearchAddress(value);
@@ -80,7 +79,7 @@ const MainMap = () => {
         }
       );
       console.log("response.data", response.data);
-      const { data } = response;
+      const { data } = response.data;
       searchData(data);
       console.log("searchData!!!!!!!!", searchData);
     } catch (error) {
