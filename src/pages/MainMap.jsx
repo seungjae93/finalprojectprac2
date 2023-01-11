@@ -175,7 +175,6 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
-            onCreate={(map) => setMap(map)}
             onDragEnd={(map) => {
               setPos({
                 center: {
