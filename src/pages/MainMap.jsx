@@ -23,7 +23,7 @@ const MainMap = () => {
   const [searchData, setSearchData] = useState([]);
   const [map, setMap] = useState(); //지도
   const [pos, setPos] = useState(); //경도 위도
-  const [_level, _setLevel] = useState(); //지도 줌레벨
+  const [level, setLevel] = useState(); //지도 줌레벨
 
   // const handleMapInfo = () => {
   //   {
@@ -143,7 +143,7 @@ const MainMap = () => {
       console.log("post에러를 잡았어", error);
     }
   };
-
+  console.log(level);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
@@ -185,6 +185,7 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
+            onZoomChanged={(map) => setLevel(map.getLevel())}
             onDragEnd={(map) => {
               setPos({
                 center: {
