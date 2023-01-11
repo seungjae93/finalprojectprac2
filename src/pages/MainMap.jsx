@@ -119,8 +119,14 @@ const MainMap = () => {
   const onPosHandler = async () => {
     try {
       await axios.post(`https://spart-instagram.shop/map`, {
-        neLatLng,
-        swLatLng,
+        swLatLng: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        neLatLng: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
       });
       console.log("들어갔니???????");
     } catch (error) {
@@ -169,7 +175,7 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
-            onDragEnd={(map) => {
+            onDragEnd={(map) =>
               setPos({
                 center: {
                   lat: map.getCenter().getLat(),
@@ -183,9 +189,9 @@ const MainMap = () => {
                   lat: map.getBounds().getNorthEast().getLat(),
                   lng: map.getBounds().getNorthEast().getLng(),
                 },
-              });
-              onPosHandler();
-            }}
+              })
+            }
+            onIdle={onPosHandler}
           >
             {positions.map((position) => {
               return (
