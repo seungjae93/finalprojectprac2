@@ -80,11 +80,9 @@ const MainMap = () => {
       );
       console.log("response.data", response.data);
       const { data } = response.data;
-      searchData(data);
-      console.log("searchData!!!!!!!!", searchData);
-    } catch (error) {
-      console.log("get에러를 잡았어", error);
-    }
+      setSearchData(data);
+      console.log("searchData!!!!!!!!", setSearchData);
+    } catch (error) {}
   }, 500);
 
   //검색시 리렌더링 줄이기
