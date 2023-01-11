@@ -118,6 +118,7 @@ const MainMap = () => {
 
   const onPosHandler = async () => {
     try {
+      console.log("들어갔니???????");
       await axios.post(`https://spart-instagram.shop/map`, {
         swLatLng: {
           lat: map.getBounds().getSouthWest().getLat(),
