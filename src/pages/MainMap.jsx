@@ -106,11 +106,7 @@ const MainMap = () => {
       await axios.post(`https://spart-instagram.shop/search`, {
         text: `${searchAddress}`,
       });
-      console.log("보내지니???");
-      console.log("SearchData", searchData);
-    } catch (error) {
-      console.log("post에러를 잡았어", error);
-    }
+    } catch (error) {}
     setSearchAddress("");
   }, [searchAddress]);
 
@@ -119,6 +115,24 @@ const MainMap = () => {
   //   console.log(pos);
   // }, [map, state, pos]);
   console.log(pos);
+
+  const onPosHandler = async () => {
+    try {
+      await axios.post(`https://spart-instagram.shop/map`, {
+        swLatLng: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        neLatLng: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
+      });
+      console.log("들어갔니???????");
+    } catch (error) {
+      console.log("post에러를 잡았어", error);
+    }
+  };
 
   return (
     <>
@@ -161,23 +175,24 @@ const MainMap = () => {
               height: "100%",
             }}
             level={3} // 지도의 확대 레벨
-            onDragEnd={(map) =>
-              setPos({
-                center: {
-                  lat: map.getCenter().getLat(),
-                  lng: map.getCenter().getLng(),
-                },
-                swLatLng: {
-                  lat: map.getBounds().getSouthWest().getLat(),
-                  lng: map.getBounds().getSouthWest().getLng(),
-                },
-                neLatLng: {
-                  lat: map.getBounds().getNorthEast().getLat(),
-                  lng: map.getBounds().getNorthEast().getLng(),
-                },
-              })
+            onDragEnd={
+              ((map) =>
+                setPos({
+                  center: {
+                    lat: map.getCenter().getLat(),
+                    lng: map.getCenter().getLng(),
+                  },
+                  swLatLng: {
+                    lat: map.getBounds().getSouthWest().getLat(),
+                    lng: map.getBounds().getSouthWest().getLng(),
+                  },
+                  neLatLng: {
+                    lat: map.getBounds().getNorthEast().getLat(),
+                    lng: map.getBounds().getNorthEast().getLng(),
+                  },
+                }),
+              onPosHandler)
             }
-            // onIdle={handleMapInfo}
           >
             {positions.map((position) => {
               return (
