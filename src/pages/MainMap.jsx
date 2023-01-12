@@ -125,7 +125,7 @@ const MainMap = () => {
       },
     });
   }, [state]);
-  console.log(level);
+  console.log(zoomLevel);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
