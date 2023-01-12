@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { throttle } from "lodash";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useNavigate } from "react-router-dom";
 import TotalModal from "../components/MapModal/TotalModal";
 import SubModal from "../components/MapModal/SubModal";
 
@@ -11,39 +10,20 @@ const { kakao } = window;
 
 // 주소 입력후 검색 클릭 시 원하는 주소로 이동
 const MainMap = () => {
-  const navigate = useNavigate();
   const [state, setState] = useState({
     // 지도의 초기 위치
     center: { lat: 33.450705, lng: 126.570677 },
     // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
     isPanto: true,
   });
+  const mapRef = useRef();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [searchAddress, setSearchAddress] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [map, setMap] = useState(); //지도
   const [pos, setPos] = useState(); //경도 위도
   const [level, setLevel] = useState(); //지도 줌레벨
-
-  // const handleMapInfo = () => {
-  //   {
-  //     map &&
-  //       setPos({
-  //         center: {
-  //           lat: map.getCenter().getLat(),
-  //           lng: map.getCenter().getLng(),
-  //         },
-  //         swLatLng: {
-  //           lat: map.getBounds().getSouthWest().getLat(),
-  //           lng: map.getBounds().getSouthWest().getLng(),
-  //         },
-  //         neLatLng: {
-  //           lat: map.getBounds().getNorthEast().getLat(),
-  //           lng: map.getBounds().getNorthEast().getLng(),
-  //         },
-  //       });
-  //   }
-  // };
+  const [info, setInfo] = useState(); //지도 레벨에 따른 위도 경도
 
   const positions = [
     {
@@ -78,10 +58,9 @@ const MainMap = () => {
           search: value,
         }
       );
-      console.log("response.data", response.data);
+
       const { data } = response.data;
       searchData(data);
-      console.log("searchData!!!!!!!!", searchData);
     } catch (error) {}
   }, 500);
 
@@ -93,7 +72,8 @@ const MainMap = () => {
     if (status === kakao.maps.services.Status.OK) {
       const newSearch = data[0];
       setState({
-        center: { lat: newSearch.y, lng: newSearch.x },
+        center: { lat: Number(newSearch.y), lng: Number(newSearch.x) },
+        isPanto: true,
       });
     }
   };
@@ -110,23 +90,32 @@ const MainMap = () => {
     setSearchAddress("");
   }, [searchAddress]);
 
-  // useEffect(() => {
-  //   handleMapInfo();
-  //   console.log(pos);
-  // }, [map, state, pos]);
-  console.log(pos);
-
   const onPosHandler = async () => {
     try {
       await axios.post(`https://spart-instagram.shop/map`, {
         ...pos,
       });
-      console.log("들어갔니???????");
     } catch (error) {
       console.log("post에러를 잡았어", error);
     }
   };
-  console.log(level);
+
+  useEffect(() => {
+    /* 현재 보이는 위치에 대한 좌표 값을 받아와주는 부분 */
+    const mapObject = mapRef.current;
+    if (!mapObject) return;
+    setPos({
+      swLatLng: {
+        lat: mapObject.getBounds().getSouthWest().getLat(),
+        lng: mapObject.getBounds().getSouthWest().getLng(),
+      },
+      neLatLng: {
+        lat: mapObject.getBounds().getNorthEast().getLat(),
+        lng: mapObject.getBounds().getNorthEast().getLng(),
+      },
+    });
+  }, [state]);
+
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
@@ -146,30 +135,19 @@ const MainMap = () => {
             </AutoSearchContainer>
           )}
           <button onClick={onSearchHandler}>검색</button>
-          <button
-            onClick={() => {
-              navigate("/review");
-            }}
-          >
-            리뷰
-          </button>
         </SearchContainer>
         <StMapContainer>
           <Map // 지도를 표시할 Container
-            center={{
-              // 지도의 중심좌표
-              lat: state.center.lat,
-              lng: state.center.lng,
-            }}
+            center={state.center}
             isPanto={state.isPanto}
             style={{
               // 지도의 크기
               width: "100%",
               height: "100%",
             }}
+            ref={mapRef}
             level={3} // 지도의 확대 레벨
             onZoomChanged={(map) => setLevel(map.getLevel())}
-            onCreate={(map) => setMap(map)}
             onDragEnd={(map) => {
               setPos({
                 swLatLng: {
@@ -183,6 +161,12 @@ const MainMap = () => {
               });
               onPosHandler();
             }}
+            onBoundsChanged={(map) =>
+              setInfo({
+                sw: map.getBounds().getSouthWest().toString(),
+                ne: map.getBounds().getNorthEast().toString(),
+              })
+            }
           >
             {positions.map((position) => {
               return (
