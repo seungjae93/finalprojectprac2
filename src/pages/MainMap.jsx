@@ -173,8 +173,14 @@ const MainMap = () => {
             }}
             onBoundsChanged={(map) => {
               setInfo({
-                sw: map.getBounds().getSouthWest().toString(),
-                ne: map.getBounds().getNorthEast().toString(),
+                swLatLng: {
+                  lat: map.getBounds().getSouthWest().getLat(),
+                  lng: map.getBounds().getSouthWest().getLng(),
+                },
+                neLatLng: {
+                  lat: map.getBounds().getNorthEast().getLat(),
+                  lng: map.getBounds().getNorthEast().getLng(),
+                },
               });
               setLevel(map.getLevel());
               onDragHandler();
