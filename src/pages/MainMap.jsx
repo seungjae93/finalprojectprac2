@@ -94,6 +94,15 @@ const MainMap = () => {
     try {
       await axios.post(`https://spart-instagram.shop/map`, {
         ...pos,
+      });
+    } catch (error) {
+      console.log("post에러를 잡았어", error);
+    }
+  };
+  const onDragHandler = async () => {
+    try {
+      await axios.post(`https://spart-instagram.shop/map`, {
+        ...info,
         level,
       });
     } catch (error) {
@@ -159,16 +168,17 @@ const MainMap = () => {
                   lat: map.getBounds().getNorthEast().getLat(),
                   lng: map.getBounds().getNorthEast().getLng(),
                 },
-                level: setLevel(map.getLevel()),
               });
               onPosHandler();
             }}
-            onBoundsChanged={(map) =>
+            onBoundsChanged={(map) => {
               setInfo({
                 sw: map.getBounds().getSouthWest().toString(),
                 ne: map.getBounds().getNorthEast().toString(),
-              })
-            }
+              });
+              setLevel(map.getLevel());
+              onDragHandler();
+            }}
           >
             {positions.map((position) => {
               return (
