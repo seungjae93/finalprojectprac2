@@ -6,12 +6,14 @@ import useInputItem from "../hooks/useInputItem";
 const Review = () => {
   const { input, onChangeHandler } = useInputItem();
   const [address, setAddress] = useState("");
+  const [address_jibun, setJibunAddress] = useState("");
   const [image, setImage] = useState([]);
   const { mutate: addPost } = useAddPost();
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("address", address);
+    formData.append("address_jibun", address_jibun);
     for (const property in input) {
       formData.append(`${property}`, input[property]);
     }
@@ -29,13 +31,21 @@ const Review = () => {
     <>
       <h1>후기를 작성하는 페이지 입니다</h1>
       <StContainer>
-        <PostCode setAddress={setAddress} />
+        <PostCode setAddress={setAddress} setJibunAddress={setJibunAddress} />
         <input
           type="text"
           name="address"
           value={address}
           onChange={() => {}}
-          placeholder="우편번호 찾기를 이용하세요"
+          placeholder="우편번호 찾기를 이용하세요(도로명주소)"
+          size="45"
+        />
+        <input
+          type="text"
+          name="setJibunAddress"
+          value={address_jibun}
+          onChange={() => {}}
+          placeholder="우편번호 찾기를 이용하세요(지번주소)"
           size="45"
         />
         <select name="residence_type" onChange={onChangeHandler}>
