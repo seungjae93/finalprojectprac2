@@ -158,6 +158,7 @@ const MainMap = () => {
                   lat: map.getBounds().getNorthEast().getLat(),
                   lng: map.getBounds().getNorthEast().getLng(),
                 },
+                level: setLevel(map.getLevel()),
               });
               onPosHandler();
             }}
