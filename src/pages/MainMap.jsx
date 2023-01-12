@@ -22,7 +22,7 @@ const MainMap = () => {
   const [searchAddress, setSearchAddress] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [pos, setPos] = useState(); //경도 위도
-  const [level, setLevel] = useState(); //지도 줌레벨
+  const [zoomLevel, setZoomLevel] = useState(); //지도 줌레벨
   const [info, setInfo] = useState(); //지도 레벨에 따른 위도 경도
 
   const positions = [
@@ -103,7 +103,7 @@ const MainMap = () => {
     try {
       await axios.post(`https://spart-instagram.shop/map`, {
         ...info,
-        level,
+        zoomLevel,
       });
     } catch (error) {
       console.log("post에러를 잡았어", error);
@@ -157,7 +157,7 @@ const MainMap = () => {
             }}
             ref={mapRef}
             level={3} // 지도의 확대 레벨
-            onZoomChanged={(map) => setLevel(map.getLevel())}
+            onZoomChanged={(map) => setZoomLevel(map.getLevel())}
             onDragEnd={(map) => {
               setPos({
                 swLatLng: {
@@ -182,7 +182,7 @@ const MainMap = () => {
                   lng: map.getBounds().getNorthEast().getLng(),
                 },
               });
-              setLevel(map.getLevel());
+              setZoomLevel(map.getLevel());
               onDragHandler();
             }}
           >
