@@ -94,6 +94,7 @@ const MainMap = () => {
     try {
       await axios.post(`https://spart-instagram.shop/map`, {
         ...pos,
+        level,
       });
     } catch (error) {
       console.log("post에러를 잡았어", error);
