@@ -116,7 +116,7 @@ const MainMap = () => {
       },
     });
   }, [state]);
-  console.log(setLevel);
+  console.log(level);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
