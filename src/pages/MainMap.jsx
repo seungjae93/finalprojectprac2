@@ -58,9 +58,12 @@ const MainMap = () => {
           search: value,
         }
       );
-
+      console.log("response", response);
+      console.log("response.data", response.data);
       const { data } = response.data;
-      searchData(data);
+      console.log("data", data);
+      searchData.push(data);
+      console.log("searchData", searchData);
     } catch (error) {
       console.log("get에러를 잡았어", error);
     }
@@ -157,7 +160,11 @@ const MainMap = () => {
           {searchAddress && (
             <AutoSearchContainer>
               <AutoSearchWrap>
-                <AutoSearchData></AutoSearchData>
+                {searchData.map((el, index) => {
+                  return (
+                    <AutoSearchData key={searchData.index}>{el}</AutoSearchData>
+                  );
+                })}
               </AutoSearchWrap>
             </AutoSearchContainer>
           )}
