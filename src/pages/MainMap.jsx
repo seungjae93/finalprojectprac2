@@ -61,7 +61,9 @@ const MainMap = () => {
 
       const { data } = response.data;
       searchData(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log("get에러를 잡았어", error);
+    }
   }, 500);
 
   //장소 검색 객체 생성
@@ -86,7 +88,9 @@ const MainMap = () => {
       await axios.post(`https://spart-instagram.shop/search`, {
         text: `${searchAddress}`,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log("post에러를 잡았어", error);
+    }
     setSearchAddress("");
   }, [searchAddress]);
 
@@ -110,11 +114,22 @@ const MainMap = () => {
     }
   };
 
+  const onGeoHandler = async (geoLocation) => {
+    try {
+      await axios.post(`https://spart-instagram.shop/map`, {
+        ...geoLocation,
+        zoomLevel,
+      });
+    } catch (error) {
+      console.log("post에러를 잡았어", error);
+    }
+  };
+
   useEffect(() => {
     /* 현재 보이는 위치에 대한 좌표 값을 받아와주는 부분 */
     const mapObject = mapRef.current;
     if (!mapObject) return;
-    setPos({
+    const geoLocation = {
       swLatLng: {
         lat: mapObject.getBounds().getSouthWest().getLat(),
         lng: mapObject.getBounds().getSouthWest().getLng(),
@@ -123,9 +138,11 @@ const MainMap = () => {
         lat: mapObject.getBounds().getNorthEast().getLat(),
         lng: mapObject.getBounds().getNorthEast().getLng(),
       },
-    });
+    };
+    onGeoHandler(geoLocation);
+    setPos(geoLocation);
   }, [state]);
-  console.log(zoomLevel);
+  console.log(pos);
   return (
     <>
       {modalOpen && <TotalModal modalHandler={modalHandler} />}
