@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import DropBox from "./DropBox";
+import Select from "./Select";
 
 function ModalBasic({ setModalOpen }) {
   // 모달 끄기
@@ -12,7 +12,8 @@ function ModalBasic({ setModalOpen }) {
     <ModalBackdrop>
       <StContainer>
         <StCloseBut onClick={closeModal}>X</StCloseBut>
-        <DropBox />
+        <Select />
+        <button>선택완료</button>
       </StContainer>
     </ModalBackdrop>
   );

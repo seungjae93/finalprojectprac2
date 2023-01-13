@@ -9,7 +9,7 @@ const postsApi = axios.create({
 export const addPost = async (post) => {
   try {
     const response = await postsApi.post("/review", post);
-    console.log(response);
+
     if (response.status === 200) return response.data;
     else if (response.status === 401) {
       alert("로그인 먼저 해주세요");
@@ -26,7 +26,7 @@ export const useAddPost = () => {
 };
 
 //GET
-// export const getPosts = async () => {
-//   const response = await postsApi.get("/review");
-//   return response.data;
-// };
+export const getPosts = async () => {
+  const response = await postsApi.get("/review");
+  return response.data;
+};

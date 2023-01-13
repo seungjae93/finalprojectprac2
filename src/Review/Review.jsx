@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import { useAddPost } from "./postsApi";
-
-import PostCode from "../pages/PostCode";
+import PostCode from "./PostCode";
 import useInputItem from "../hooks/useInputItem";
 
 const Review = () => {
@@ -17,7 +15,6 @@ const Review = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
-
     formData.append("address", address);
     formData.append("address_jibun", address_jibun);
 
