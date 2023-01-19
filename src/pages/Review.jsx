@@ -1,35 +1,37 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAddPost } from "./postsApi";
-import PostCode from "../pages/PostCode";
+import { useAddPost } from "../redux/api/reviewApi";
+import PostCode from "../components/PostCode";
 import useInputItem from "../hooks/useInputItem";
+
 const Review = () => {
   const { input, onChangeHandler } = useInputItem();
   const [address, setAddress] = useState("");
   const [address_jibun, setJibunAddress] = useState("");
   const [image, setImage] = useState([]);
+
   const { mutate: addPost } = useAddPost();
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("address", address);
     formData.append("address_jibun", address_jibun);
+
     for (const property in input) {
       formData.append(`${property}`, input[property]);
     }
+
     for (let i = 0; i < image.length; i++) {
       formData.append("images", image[i]);
     }
-    //formData console 출력
-    for (let value of formData.values()) {
-      console.log(value);
-    }
+
     const review = formData;
     addPost(review);
   };
+
   return (
     <>
-      <h1>후기를 작성하는 페이지 입니다</h1>
       <StContainer>
         <PostCode setAddress={setAddress} setJibunAddress={setJibunAddress} />
         <input
@@ -433,7 +435,9 @@ const Review = () => {
     </>
   );
 };
+
 export default Review;
+
 const StContainer = styled.form`
   display: flex;
   flex-direction: column;
