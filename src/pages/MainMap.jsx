@@ -197,8 +197,6 @@ const MainMap = () => {
     }
   }, [zoomLevel, positions]);
 
-  console.log(zoomLevel);
-  console.log(positions);
   useEffect(() => {
     /* 현재 보이는 위치에 대한 좌표 값을 받아와주는 부분 */
     const mapObject = mapRef.current;

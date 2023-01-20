@@ -20,7 +20,6 @@ const TotalReview = ({ estateIdData }) => {
   // const { estate, estateInfoArr, reviewArr } = data;
   const estate = data?.estate;
   const estateInfoArr = data?.estateInfoArr;
-  console.log(data);
 
   return (
     <>

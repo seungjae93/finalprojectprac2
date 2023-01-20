@@ -8,7 +8,6 @@ const SelectBox = () => {
   const HandleChange = (e) => {
     const { name, value } = e.target;
     setSelected({ ...selected, [name]: value });
-    console.log(name, value);
   };
 
   return (
