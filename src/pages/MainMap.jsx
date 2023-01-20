@@ -360,7 +360,7 @@ const StSearch = styled.input`
 const AutoSearchContainer = styled.div`
   position: absolute;
   width: 23%;
-  height: 20vh;
+  height: 25vh;
   top: 45px;
   z-index: 3;
   background-color: #fff;
