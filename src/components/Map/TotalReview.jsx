@@ -36,7 +36,7 @@ const TotalReview = ({ estateIdData }) => {
         <div>smell:</div>
         <div>town_noise:</div>
         <div>walls_noise:</div>
-        <BarChart />;
+        <BarChart />
       </StModalContainer>
       {/* })} */}
     </>
